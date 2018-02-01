@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/static/CSS/mode.css" />
     <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.js"></script>
     <script src="/static/JS/mode.js"></script>
+    <script src="/static/showdown-1.8.6/dist/showdown.min.js"></script>
 </head>
 <body>
     <div class="main">
@@ -101,6 +102,14 @@
         <span class="edit-submit-confirm-tip edit-submit-confirm-css"></span>
         <span class="edit-submit-confirm-yes edit-submit-confirm-css" onclick="edit_submit_yes()">yes</span>
         <span class="edit-submit-confirm-no edit-submit-confirm-css" onclick="edit_submit_no()">no</span>
+    </div>
+    <div class="index-article">
+        <div class="menu">
+            <div class="menu-cancel" onclick="edit_panel_none()">
+                <img src="/static/pics/cancel.png" class="menu-cancel-img">
+            </div>
+        </div>
+        <div class="append-text"></div>
     </div>
 </body>
 </html>

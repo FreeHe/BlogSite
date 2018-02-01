@@ -66,11 +66,21 @@ function window_index_article(){
     for(var i = 0; i < window.tags.length; i++){
         for(var j = 0; j < window.tag_article[window.tags[i]].length; i++){
             var url = "/index-get-article/?tag="+window.tags[i]+"&title="+window.tag_article[window.tags[i]][j][0];
-            var index_div = "<a href='"+url+"'>"+"<div align='center' class='index-div'>"+"<h2>"
-                +window.tag_article[window.tags[i]][j][0]+"</h2></div>"+"</a>";
+            var index_div = "<div align='center' onclick=show_article("+"'"+url+"'"+") class='index-div'"+">"+"<h2>"
+                +window.tag_article[window.tags[i]][j][0]+"</h2></div>";
             $('.index').append($(index_div));
         }
     }
+}
+
+function show_article(url){
+    $.ajax({url:url, type:'GET', data:{}, success:function(d){
+        $('.index-article').css('display', 'block');
+        $('.append-text').children().remove();
+        var convert = new showdown.Converter();
+        var html = convert.makeHtml(d);
+        $('.append-text').append($(html));
+    }});
 }
 
 function tag_o(id){
@@ -161,11 +171,14 @@ function edit_content(){
 
 function edit_panel_none(){
     $('.edit-panel').css('display', 'none');
+    $('.index-article').css('display', 'none');
 }
 
 function render(){
-    var html = $('.edit-panel-text').val();
+    var text = $('.edit-panel-text').val();
     $('.edit-panel-render').children().remove();
+    var convert = new showdown.Converter();
+    var html = convert.makeHtml(text);
     $('.edit-panel-render').append($(html));
 }
 

@@ -12,6 +12,7 @@ function show(text){
         $('.body-main').css('display', 'none');
         $('.pack-up').css('display', 'block');
         $('.index').css('display', 'block');
+        window_index_article();
     }
     if(text == 'tags'){
         $('.line').css('opacity', '0');
@@ -64,7 +65,7 @@ function window_tag_article(id, ta){
 function window_index_article(){
     $('.index').children().remove();
     for(var i = 0; i < window.tags.length; i++){
-        for(var j = 0; j < window.tag_article[window.tags[i]].length; i++){
+        for(var j = 0; j < window.tag_article[window.tags[i]].length; j++){
             var url = "/index-get-article/?tag="+window.tags[i]+"&title="+window.tag_article[window.tags[i]][j][0];
             var index_div = "<div align='center' onclick=show_article("+"'"+url+"'"+") class='index-div'"+">"+"<h2>"
                 +window.tag_article[window.tags[i]][j][0]+"</h2></div>";

@@ -17,7 +17,7 @@ def show_ut():
 
 def show_a():
     for i in Articles.objects.all():
-        print(i.Tag, i.Title, i.Bode, i.UserId, i.CreateTime)
+        print(i.Tag, i.Title, i.Bode, i.UserId, i.CreateTime, i.UpdateTime)
         print('\n')
 
 

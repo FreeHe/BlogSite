@@ -15,6 +15,7 @@ class Articles(models.Model):
     Bode = models.TextField(default='')
     UserId = models.ForeignKey(Users, on_delete=models.CASCADE)
     CreateTime = models.DateTimeField(auto_now_add=True)
+    UpdateTime = models.CharField(max_length=50, default='')
 
 
 class UserTags(models.Model):

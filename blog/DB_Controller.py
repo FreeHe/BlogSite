@@ -4,6 +4,7 @@
 
 from blog.models import Users, UserTags, Articles
 import hashlib
+from datetime import datetime
 SUCCESSFUL = 1
 FAILED = 0
 ACCOUNT_EXIST = 2
@@ -11,13 +12,28 @@ ACCOUNT_NOT_EXIST = 3
 NO_TAG = 4
 NO_ESSAY = 5
 
-# -------------Users----------------------
+# -----------------------------------------
 
 
 def get_hash(s):
     h = hashlib.md5()
     h.update(s.encode())
     return h.hexdigest()
+
+
+def time_now():
+    time = datetime.now()
+    return '-'.join([
+        str(time.year),
+        str(time.month),
+        str(time.day),
+        str(time.hour),
+        str(time.minute),
+        str(time.second)
+    ])
+
+
+# -------------Users-----------------------
 
 
 def create_account(nick, psd):
@@ -125,6 +141,7 @@ def re_name_user_tag(uid, old_tag, new_tag):
 
 
 def article_add(uid, title, tag, bode):
+    time = time_now()
     has_tag = UserTags.objects.filter(Tags=tag, UserId=uid)
     if not has_tag:
         return NO_TAG
@@ -132,10 +149,11 @@ def article_add(uid, title, tag, bode):
         try:
             exist_article = Articles.objects.filter(UserId=uid, Title=title, Tag=tag)
             if not exist_article:
-                Articles.objects.create(UserId=Users.objects.get(UserId=uid), Tag=tag, Bode=bode, Title=title)
+                Articles.objects.create(UserId=Users.objects.get(UserId=uid), Tag=tag, Bode=bode, Title=title,
+                                        UpdateTime=time)
                 return SUCCESSFUL
             else:
-                exist_article.update(Bode=bode)
+                exist_article.update(Bode=bode, UpdateTime=time)
                 return SUCCESSFUL
         except Exception as e:
             print(e)

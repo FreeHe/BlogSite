@@ -19,7 +19,13 @@ def index(requests):
         if requests.session['is_login']:
             db_u = models.Users.objects.get(UserId=requests.session['uid'])
             nick = db_u.Nick
-            return render(requests, 'mode.html', {'nick': nick})
+            if 'HTTP_X_FORWARDED_FOR' in requests.META.keys():
+                ip = requests.META['HTTP_X_FORWARDED_FOR']
+            else:
+                ip = requests.META['REMOTE_ADDR']
+            response = render(requests, 'mode.html', {'nick': nick})
+            response.set_cookie('right_hear', get_hash(ip))
+            return response
         else:
             return redirect('/login/')
     except Exception as e:
@@ -110,7 +116,7 @@ def get_tag_article(requests):
         for t in tags:
             db = models.Articles.objects.filter(UserId=uid, Tag=t.Tags)
             for d in db:
-                tmp.append([d.Title, str(d.CreateTime)])
+                tmp.append([d.Title, str(d.UpdateTime)])
             data[t.Tags] = tmp
             tmp = []
         return HttpResponse(str(data))

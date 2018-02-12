@@ -15,18 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from blog import views
+from blog import views as B_views
+from media import views as M_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index),
-    url(r'^login/$', views.login),
-    url(r'^confirm-api/$', views.confirm),
-    url(r'^get-tags-api/$', views.get_tags),
-    url(r'^add-tag-api/$', views.add_tag),
-    url(r'^delete-tag-api/$', views.delete_tag),
-    url(r'^get-tag-article-api/$', views.get_tag_article),
-    url(r'^add-article-api/$', views.add_article),
-    url(r'^get-article-api/$', views.get_article),
-    url(r'^index-get-article/$', views.index_get_article),
+    url(r'^$', B_views.index),
+    url(r'^login/$', B_views.login),
+    url(r'^confirm-api/$', B_views.confirm),
+    url(r'^get-tags-api/$', B_views.get_tags),
+    url(r'^add-tag-api/$', B_views.add_tag),
+    url(r'^delete-tag-api/$', B_views.delete_tag),
+    url(r'^get-tag-article-api/$', B_views.get_tag_article),
+    url(r'^add-article-api/$', B_views.add_article),
+    url(r'^get-article-api/$', B_views.get_article),
+    url(r'^index-get-article/$', B_views.index_get_article),
+    url(r'^media/$', M_views.media),
 ]
